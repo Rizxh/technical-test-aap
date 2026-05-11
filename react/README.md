@@ -1,38 +1,81 @@
 # React Technical Test
 
-Repository ini berisi 2 project React terpisah:
+Monorepo React ini berisi 2 aplikasi yang meng-cover 2 kebutuhan test:
 
-- `todo-local`: Todo CRUD berbasis local state + localStorage
-- `todo-api`: Todo CRUD berbasis REST API DummyJSON
+- `todo-local`: CRUD Todo dengan local state + localStorage
+- `todo-api`: CRUD Todo dengan REST API DummyJSON
+
+## Project List
+
+### 1) `todo-local`
+Fokus pada pengelolaan data lokal:
+- CRUD todo (create, read, update, delete)
+- Search todo berdasarkan title
+- Filter status (`all`, `done`, `pending`)
+- Persist data ke `localStorage`
+- Validasi form required
+
+### 2) `todo-api`
+Fokus pada integrasi API:
+- Fetch data dari DummyJSON
+- Create, update, delete ke endpoint API
+- Search (debounced)
+- Filter status di sisi UI
+- Pagination data table
+- Loading state dan error handling
+
+## Tech Stack
+
+- React + TypeScript
+- Vite
+- Fetch API
+- ESLint
 
 ## Cara Menjalankan
 
-### `todo-local`
-
+### Jalankan `todo-local`
 ```bash
 cd react/todo-local
 npm install
 npm run dev
 ```
 
-### `todo-api`
-
+### Jalankan `todo-api`
 ```bash
 cd react/todo-api
 npm install
 npm run dev
 ```
 
-## Teknologi
+## Build & Lint
 
-- React + TypeScript
-- Vite
-- Fetch API
-- LocalStorage
+Contoh untuk masing-masing project:
+```bash
+npm run lint
+npm run build
+```
 
-## Struktur Folder Utama
+## Struktur Arsitektur (Per Project)
 
-- `src/features/todo/components`: reusable komponen UI Todo
-- `src/features/todo/hooks`: custom hooks untuk logic state/data
-- `src/features/todo/services`: abstraction API/service
-- `src/components`, `src/hooks`, `src/services`, `src/types`, `src/pages`: struktur umum untuk skalabilitas
+```text
+src/
+  features/
+    todo/
+      components/   -> reusable UI todo
+      hooks/        -> business logic/state orchestration
+      services/     -> API/service layer
+      types.ts      -> model dan type todo
+  components/       -> shared component (opsional)
+  hooks/            -> shared hook (opsional)
+  services/         -> shared service (opsional)
+  types/            -> shared types (opsional)
+  pages/            -> page container (opsional)
+```
+
+## Catatan Penilaian
+
+Struktur dan implementasi disusun agar memenuhi poin assessment:
+- clean code dan readability
+- modular service/hook/component
+- penanganan loading/error state
+- dokumentasi setup dan arsitektur

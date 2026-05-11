@@ -1,14 +1,17 @@
 # Todo API (React + TypeScript)
 
-Aplikasi CRUD Todo terhubung ke DummyJSON dengan fitur:
+Aplikasi Todo List berbasis REST API menggunakan DummyJSON.
+
+## Fitur
 
 - Fetch data dari API (`GET /todos`)
 - Create (`POST /todos/add`)
 - Update (`PUT /todos/:id`)
 - Delete (`DELETE /todos/:id`)
 - Search API (`/todos/search`)
-- Filter status (All, Done, Pending)
-- Pagination tabel
+- Debounce search untuk mengurangi request beruntun
+- Filter status (`all`, `done`, `pending`) di UI
+- Pagination table
 - Loading state dan error handling
 
 ## Menjalankan Project
@@ -16,6 +19,14 @@ Aplikasi CRUD Todo terhubung ke DummyJSON dengan fitur:
 ```bash
 npm install
 npm run dev
+```
+
+## Scripts
+
+```bash
+npm run dev    # run development server
+npm run lint   # lint code
+npm run build  # type-check + production build
 ```
 
 ## Build Production
@@ -27,84 +38,53 @@ npm run build
 ## Endpoint API
 
 - Base URL: `https://dummyjson.com`
+- Endpoint yang digunakan:
+  - `GET /todos`
+  - `GET /todos/search?q=...`
+  - `POST /todos/add`
+  - `PUT /todos/:id`
+  - `DELETE /todos/:id`
 
-## Struktur Singkat
+## Struktur Folder
 
-- `src/features/todo/services/httpClient.ts`: fetch wrapper + HTTP error
-- `src/features/todo/services/todoService.ts`: modular service CRUD todo
-- `src/features/todo/hooks/useApiTodos.ts`: orchestration data fetching/mutation
-- `src/features/todo/hooks/useDebounce.ts`: debounce search input
-- `src/features/todo/components/*`: reusable form, toolbar, table, pagination
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+src/
+  features/todo/
+    components/
+      TodoForm.tsx
+      TodoToolbar.tsx
+      TodoTable.tsx
+      Pagination.tsx
+    hooks/
+      useApiTodos.ts
+      useDebounce.ts
+    services/
+      httpClient.ts
+      todoService.ts
+    types.ts
+  App.tsx
+  index.css
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Penjelasan Arsitektur Singkat
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `httpClient.ts`: wrapper untuk fetch + standardisasi error HTTP
+- `todoService.ts`: abstraction endpoint API supaya pemanggilan dari UI tetap bersih
+- `useApiTodos.ts`: orchestrasi fetch list, mutation CRUD, pagination state
+- `useDebounce.ts`: debounce query search sebelum request API
+- `App.tsx`: composition layer antar komponen UI dan hook
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Demo Flow yang Bisa Diuji
+
+1. Buka app dan tunggu data todo tampil
+2. Cari todo lewat search input (dengan debounce)
+3. Ubah filter status
+4. Pindah halaman pagination
+5. Tambah todo baru
+6. Edit todo yang ada
+7. Hapus todo
+
+## Catatan Integrasi API
+
+- DummyJSON adalah API dummy/simulasi.
+- Operasi `POST/PUT/DELETE` berhasil merespon request, namun tidak menyimpan perubahan secara permanen di server.

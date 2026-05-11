@@ -1,11 +1,24 @@
 # Todo Local (React + TypeScript)
 
-Aplikasi CRUD Todo dengan fitur:
+Aplikasi Todo List berbasis local state dan `localStorage`.
+
+## Fitur
 
 - Create, Read, Update, Delete
-- Search berdasarkan title
-- Filter status: All, Done, Pending
-- Persist data via `localStorage`
+- Search berdasarkan `title`
+- Filter status: `all`, `done`, `pending`
+- Persist data via `localStorage` (data tetap ada setelah refresh)
+- Validasi form (`title` dan `description` wajib diisi)
+
+## Demo Flow yang Bisa Diuji
+
+1. Tambah todo baru
+2. Edit title/description/status todo
+3. Klik toggle status pada row tabel
+4. Hapus todo
+5. Cari todo lewat search input
+6. Ubah filter status
+7. Refresh browser, data tetap tersimpan
 
 ## Menjalankan Project
 
@@ -14,88 +27,54 @@ npm install
 npm run dev
 ```
 
+## Scripts
+
+```bash
+npm run dev    # run development server
+npm run lint   # lint code
+npm run build  # type-check + production build
+```
+
 ## Build Production
 
 ```bash
 npm run build
 ```
 
-## Struktur Singkat
+## Struktur Folder
 
-- `src/features/todo/types.ts`: type model todo
-- `src/features/todo/hooks/useLocalTodos.ts`: logic CRUD + persistence
-- `src/features/todo/components/*`: komponen form, toolbar, tabel todo
-- `src/App.tsx`: composition layer halaman utama
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+src/
+  features/todo/
+    components/
+      TodoForm.tsx
+      TodoToolbar.tsx
+      TodoTable.tsx
+    hooks/
+      useLocalTodos.ts
+    types.ts
+  App.tsx
+  index.css
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Penjelasan Arsitektur Singkat
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `useLocalTodos` menangani state utama todo + sinkronisasi `localStorage`
+- Komponen dipisah agar reusable dan mudah dites:
+  - `TodoForm` untuk create/edit
+  - `TodoToolbar` untuk search/filter
+  - `TodoTable` untuk list + aksi row
+- `App.tsx` berfungsi sebagai composition/container
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Data Model
+
+Setiap todo memiliki:
+- `id`
+- `title`
+- `description`
+- `status` (`done` / `pending`)
+- `createdDate`
+
+## Catatan
+
+- Project ini tidak memerlukan backend/API eksternal.
