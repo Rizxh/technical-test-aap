@@ -1,0 +1,193 @@
+:root {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color-scheme: light dark;
+  color: #1f2937;
+  background-color: #f3f4f6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #e5e7eb;
+    background-color: #111827;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
+  display: grid;
+  gap: 16px;
+}
+
+header,
+.todo-form,
+.toolbar,
+.table-wrapper {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stats span {
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.todo-form,
+.toolbar {
+  display: grid;
+  gap: 12px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  border: 1px solid #9ca3af;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #ffffff;
+  color: #111827;
+}
+
+button {
+  border: 1px solid #111827;
+  background: #111827;
+  color: #f9fafb;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+button.ghost {
+  background: transparent;
+  color: inherit;
+}
+
+button.danger {
+  border-color: #ef4444;
+  background: #ef4444;
+}
+
+.action-row {
+  display: flex;
+  gap: 8px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #d1d5db;
+  vertical-align: top;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 999px;
+  padding: 4px 8px;
+}
+
+.tag.done {
+  background: #16a34a;
+}
+
+.tag.pending {
+  background: #f59e0b;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 8px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.field-error,
+.status.error {
+  color: #dc2626;
+}
+
+.status,
+.empty {
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  header,
+  .todo-form,
+  .toolbar,
+  .table-wrapper {
+    background: rgba(17, 24, 39, 0.65);
+    border-color: #374151;
+  }
+
+  input,
+  textarea,
+  select {
+    background: #111827;
+    color: #f9fafb;
+    border-color: #4b5563;
+  }
+
+  .stats span,
+  th,
+  td {
+    border-color: #374151;
+  }
+}
